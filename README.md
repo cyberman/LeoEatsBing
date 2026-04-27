@@ -34,11 +34,11 @@ No Homebrew, MacPorts, Python, Cocoa app bundle, or widget runtime is required.
 
 ## Using
 
-Please read [Docs/HOW_TO_USE.md].
+Please read [Docs/HOW_TO_USE.md](https://github.com/cyberman/LeoEatsBing/blob/main/Docs/HOW_TO_USE.md).
 
 ## Troubleshooting
 
-Please read [Docs/TROUBLESHOOTING.md].
+Please read [Docs/TROUBLESHOOTING.md](https://github.com/cyberman/LeoEatsBing/blob/main/Docs/TROUBLESHOOTING.md).
 
 
 ## Trademark notice
