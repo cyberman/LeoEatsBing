@@ -13,10 +13,8 @@ If you use another location, edit `org.quietcode.leoeatsbing.plist` and adjust t
 Open Terminal.app and run:
 
 ```sh
-mkdir -p "$HOME/Library/LaunchAgents"
 cd "$HOME/LeoEatsBing"
-chmod +x leoeatsbing.sh
-cp org.quietcode.leoeatsbing.plist "$HOME/Library/LaunchAgents/"
+sh leoeatsbing_install.sh
 ```
 
 ## Test manually
@@ -91,22 +89,12 @@ cat "$HOME/Library/Logs/LeoEatsBing.error.log"
 To remove the LaunchAgent and logs:
 
 ```sh
-launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
-rm -f "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
-rm -f "$HOME/Library/Logs/LeoEatsBing.log"
-rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"
-```
+sh "$HOME/LeoEatsBing/leoeatsbing_uninstall.sh"```
 
-Optional: remove downloaded wallpapers:
+To remove the LaunchAgent, logs **ALL** stored wallpapers:
 
 ```sh
-rm -rf "$HOME/Pictures/BingWallpaper"
-```
-
-Optional: remove the project folder:
-
-```sh
-rm -rf "$HOME/LeoEatsBing"
+sh "$HOME/LeoEatsBing/leoeatsbing_uninstall.sh --purge-wallpapers"
 ```
 
 ---
