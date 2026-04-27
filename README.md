@@ -1,6 +1,6 @@
 # LeoEatsBing
 
-LeoEatsBing is a tiny Mac OS X Leopard PowerPC helper that fetches the daily Bing wallpaper, stores it locally, and sets it as the desktop picture using native Leopard tools.
+LeoEatsBing is a tiny Mac OS X Leopard PowerPC helper that fetches the daily Bing&trade; wallpaper, stores it locally, and sets it as the desktop picture using native Leopard tools.
 
 Inspired by Linux Mint Cinnamon Desklet "Bing Desktop-Hintergrundbild" by Starcross. Kudos to the coder.
 
@@ -37,6 +37,16 @@ After modifying `org.quietcode.leoeatsbing.plist` file go to Terminal.app and co
 ```
 launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
 launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+```
+
+## Deactivate
+
+If you wanna stop automatic loading of wallpapers, go to Terminal.app and copy/paste:
+```
+launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+rm -f "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+rm -f "$HOME/Library/Logs/LeoEatsBing.log"
+rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"
 ```
 
 ## Deinstall
