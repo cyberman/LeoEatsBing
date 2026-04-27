@@ -2,7 +2,35 @@
 
 # Fetch Bing image metadata and set today's image as desktop wallpaper.
 
-MARKET="de-DE"
+PREF_DOMAIN="org.quietcode.leoeatsbing"
+DEFAULT_MARKET="en-US"
+
+get_market()
+{
+  MARKET_VALUE="$(/usr/bin/defaults read "$PREF_DOMAIN" Market 2>/dev/null)"
+
+  if [ -z "$MARKET_VALUE" ]; then
+    APPLE_LOCALE="$(/usr/bin/defaults read NSGlobalDomain AppleLocale 2>/dev/null)"
+    MARKET_VALUE="$(echo "$APPLE_LOCALE" | sed 's/[.@].*$//' | tr '_' '-')"
+  fi
+
+  case "$MARKET_VALUE" in
+    ??-??|??-???|??-????)
+      echo "$MARKET_VALUE"
+      ;;
+    de)
+      echo "de-DE"
+      ;;
+    en)
+      echo "en-US"
+      ;;
+    *)
+      echo "$DEFAULT_MARKET"
+      ;;
+  esac
+}
+
+MARKET="$(get_market)"
 BASE_DIR="$HOME/Pictures/LeoEatsBingWP"
 DATE_STAMP="$(date +%Y%m%d)"
 XML_FILE="/tmp/bing-wallpaper.xml"

@@ -4,6 +4,34 @@
 
 LABEL="org.quietcode.leoeatsbing"
 
+detect_market()
+{
+  EXISTING_MARKET="$(/usr/bin/defaults read "$LABEL" Market 2>/dev/null)"
+
+  if [ -n "$EXISTING_MARKET" ]; then
+    echo "$EXISTING_MARKET"
+    return
+  fi
+
+  APPLE_LOCALE="$(/usr/bin/defaults read NSGlobalDomain AppleLocale 2>/dev/null)"
+  MARKET_VALUE="$(echo "$APPLE_LOCALE" | sed 's/[.@].*$//' | tr '_' '-')"
+
+  case "$MARKET_VALUE" in
+    ??-??|??-???|??-????)
+      echo "$MARKET_VALUE"
+      ;;
+    de)
+      echo "de-DE"
+      ;;
+    en)
+      echo "en-US"
+      ;;
+    *)
+      echo "en-US"
+      ;;
+  esac
+}
+
 SOURCE_DIR="$(cd "$(dirname "$0")" && pwd)"
 INSTALL_DIR="$HOME/LeoEatsBing"
 WALLPAPER_DIR="$HOME/Pictures/LeoEatsBingWP"
@@ -73,6 +101,11 @@ EOF
 chmod 644 "$PLIST_FILE" || exit 1
 
 launchctl load "$PLIST_FILE" || exit 1
+
+MARKET="$(detect_market)"
+/usr/bin/defaults write "$LABEL" Market "$MARKET"
+
+echo "Market: $MARKET"
 
 echo "LeoEatsBing is now installed."
 echo "Wallpaper folder: $WALLPAPER_DIR"

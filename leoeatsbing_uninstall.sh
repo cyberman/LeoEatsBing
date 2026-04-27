@@ -14,6 +14,8 @@ rm -f "$PLIST_FILE"
 rm -f "$HOME/Library/Logs/LeoEatsBing.log"
 rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"
 
+/usr/bin/defaults delete "$LABEL" 2>/dev/null
+
 rm -rf "$INSTALL_DIR"
 
 if [ "$1" = "--purge-wallpapers" ]; then
