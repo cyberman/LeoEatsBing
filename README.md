@@ -39,7 +39,7 @@ launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
 launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
 ```
 
-## Deinstallation
+## Deinstall
 
 Go to Terminal.app and copy/paste:
 
@@ -50,7 +50,7 @@ rm -f "$HOME/Library/Logs/LeoEatsBing.log"
 rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"
 ```
 
-If you don't like also the stored wallpapers anymore, go to Terminal.app and copy/paste:
+*Optional:* If you don't like also the stored wallpapers anymore, go to Terminal.app and copy/paste:
 
 ```
 rm -rf "$HOME/Pictures/BingWallpaper"
@@ -58,6 +58,7 @@ rm -rf "$HOME/Pictures/BingWallpaper"
 
 ---
 
-**IMPORTANT:** LeoEatsBing is not affiliated with Apple, Microsoft, Bing, or Ritter Sport.
+**IMPORTANT:** LeoEatsBing is not affiliated with Apple&trade;, Microsoft&trade;, Bing&trade; or Ritter Sport&trade;.
+
 It is just a small Leopard-era helper with a dangerously good appetite.
 
