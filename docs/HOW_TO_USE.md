@@ -6,8 +6,6 @@ The default setup assumes that the project folder is located here:
 
 `$HOME/LeoEatsBing`
 
-If you use another location, edit `org.quietcode.leoeatsbing.plist` and adjust the path to `leoeatsbing.sh`.
-
 ## Install
 
 Open Terminal.app and run:
