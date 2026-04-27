@@ -145,7 +145,7 @@ rm -rf "$HOME/LeoEatsBing"
 
 # Troubleshooting
 
-Please read TROUBLESHOOTING.md.
+Please read Docs/TROUBLESHOOTING.md.
 
 
 ## Trademark notice
