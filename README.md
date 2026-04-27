@@ -8,47 +8,53 @@ Inspired by Linux Mint Cinnamon Desklet "Bing Desktop-Hintergrundbild" by Starcr
 
 Go to Terminal.app and copy/paste:
 
-`mkdir -p "$HOME/Library/LaunchAgents"`
-
-`cp org.quietcode.leoeatsbing.plist "$HOME/Library/LaunchAgents/"`
-
-`chmod +x "$HOME/LeoEatsBing/leoeatsbing.sh"`
+```
+mkdir -p "$HOME/Library/LaunchAgents"
+cp org.quietcode.leoeatsbing.plist "$HOME/Library/LaunchAgents/"
+chmod +x "$HOME/LeoEatsBing/leoeatsbing.sh"
+```
 
 ## Start
 
 Go to Terminal.app and copy/paste:
 
-`launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
+```
+launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+```
 
 ## Stop
 
 Go to Terminal.app and copy/paste:
 
-`launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
+```
+launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+```
 
 ## Reload
 
 After modifying `org.quietcode.leoeatsbing.plist` file go to Terminal.app and copy/paste:
 
-`launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
-
-`launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
+```
+launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+```
 
 ## Deinstallation
 
 Go to Terminal.app and copy/paste:
 
-`launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
-
-`rm "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
-
-`rm -f "$HOME/Library/Logs/LeoEatsBing.log"`
-
-`rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"`
+```
+launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+rm "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
+rm -f "$HOME/Library/Logs/LeoEatsBing.log"
+rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"
+```
 
 If you don't like also the stored wallpapers anymore, go to Terminal.app and copy/paste:
 
-`rm -rf "$HOME/Pictures/BingWallpaper"`
+```
+rm -rf "$HOME/Pictures/BingWallpaper"
+```
 
 ---
 
