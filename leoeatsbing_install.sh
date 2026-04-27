@@ -38,6 +38,23 @@ WALLPAPER_DIR="$HOME/Pictures/LeoEatsBingWP"
 LAUNCHAGENT_DIR="$HOME/Library/LaunchAgents"
 PLIST_FILE="$LAUNCHAGENT_DIR/$LABEL.plist"
 
+APP_SUPPORT_DIR="$HOME/Library/Application Support/LeoEatsBing"
+
+get_current_desktop_picture()
+{
+  /usr/bin/osascript <<'EOF' 2>/dev/null
+tell application "Finder"
+    try
+        set imageFile to desktop picture as alias
+        set imagePath to POSIX path of imageFile
+        return imagePath
+    on error
+        return ""
+    end try
+end tell
+EOF
+}
+
 SCRIPT_SRC="$SOURCE_DIR/leoeatsbing.sh"
 SCRIPT_DST="$INSTALL_DIR/leoeatsbing.sh"
 
@@ -50,6 +67,37 @@ mkdir -p "$INSTALL_DIR"
 mkdir -p "$WALLPAPER_DIR"
 mkdir -p "$LAUNCHAGENT_DIR"
 mkdir -p "$HOME/Library/Logs"
+mkdir -p "$APP_SUPPORT_DIR"
+
+ORIGINAL_DESKTOP_PATH="$(get_current_desktop_picture)"
+
+if [ -n "$ORIGINAL_DESKTOP_PATH" ] && [ -f "$ORIGINAL_DESKTOP_PATH" ]; then
+  ORIGINAL_NAME="$(basename "$ORIGINAL_DESKTOP_PATH")"
+
+  case "$ORIGINAL_NAME" in
+    *.*)
+      ORIGINAL_EXT=".${ORIGINAL_NAME##*.}"
+      ;;
+    *)
+      ORIGINAL_EXT=".jpg"
+      ;;
+  esac
+
+  ORIGINAL_BACKUP="$APP_SUPPORT_DIR/original-desktop-picture$ORIGINAL_EXT"
+
+  if [ ! -f "$ORIGINAL_BACKUP" ]; then
+    cp -p "$ORIGINAL_DESKTOP_PATH" "$ORIGINAL_BACKUP"
+  fi
+
+  /usr/bin/defaults write "$LABEL" OriginalDesktopPicturePath "$ORIGINAL_DESKTOP_PATH"
+  /usr/bin/defaults write "$LABEL" OriginalDesktopPictureBackup "$ORIGINAL_BACKUP"
+  /usr/bin/defaults write "$LABEL" OriginalDesktopPictureBackupDate "$(date '+%Y-%m-%d %H:%M:%S')"
+
+  echo "Original desktop picture backed up:"
+  echo "$ORIGINAL_BACKUP"
+else
+  echo "Warning: Could not detect original desktop picture."
+fi
 
 if [ "$SCRIPT_SRC" != "$SCRIPT_DST" ]; then
   cp "$SCRIPT_SRC" "$SCRIPT_DST" || exit 1

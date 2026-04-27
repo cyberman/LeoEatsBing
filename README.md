@@ -41,6 +41,8 @@ The goal is to be the smallest sensible Leopard-native answer to a simple questi
 
 > How would a PowerPC Mac running Mac OS X Leopard eat today's Bing wallpaper?
 
+Many tools can fetch the daily Bing wallpaper. LeoEatsBing exists because most of them do not care about a PowerPC Leopard Mac in 2026.
+
 ## Project scope
 
 LeoEatsBing is intentionally small.

@@ -140,6 +140,41 @@ Case-only renames such as `Docs` to `docs` should not be performed on a case-ins
 
 Repository structure fixes should be done on a case-sensitive filesystem, for example on a Linux machine.
 
+## Desktop picture safety
+
+LeoEatsBing changes a visible user setting: the desktop picture.
+
+For that reason, installation should preserve the current desktop picture before the first automatic change happens.
+
+The original desktop picture path is stored in the user preferences domain:
+
+```sh
+~/Library/Preferences/org.quietcode.leoeatsbing.plist
+````
+
+A backup copy of the original image is stored in:
+
+```sh
+~/Library/Application Support/LeoEatsBing/
+```
+
+Downloaded Bing wallpapers are stored separately in:
+
+```sh
+~/Pictures/LeoEatsBingWP/
+```
+
+This keeps three concerns separate:
+
+- preferences remember state
+    
+- Application Support stores internal helper data
+    
+- Pictures stores user-visible wallpaper files
+    
+
+On uninstall, LeoEatsBing should try to restore the original desktop picture before removing its own files.
+
 ## Project philosophy
 
 LeoEatsBing should stay small.
