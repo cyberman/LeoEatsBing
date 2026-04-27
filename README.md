@@ -6,6 +6,41 @@ Inspired by the Linux Mint Cinnamon desklet “Bing Desktop-Hintergrundbild” b
 
 Leo wakes up. Bing disappears. Wallpaper remains.
 
+## Why another Bing wallpaper script?
+
+There are many scripts that download the daily Bing wallpaper.
+
+LeoEatsBing does not try to reinvent that idea.
+
+Its purpose is narrower:
+
+LeoEatsBing provides a small, dependency-free, Mac OS X Leopard PowerPC-friendly implementation that feels at home on a 2009-era Mac.
+
+It deliberately avoids:
+
+- Homebrew
+- MacPorts
+- Python
+- Node.js
+- Swift
+- modern macOS APIs
+- external wallpaper tools
+- widget runtimes
+
+Instead, it uses what Leopard already provides:
+
+- `/usr/bin/curl`
+- `/usr/bin/osascript`
+- Finder
+- `launchd`
+- user preferences through `defaults`
+
+The goal is not to be the most feature-rich Bing wallpaper tool.
+
+The goal is to be the smallest sensible Leopard-native answer to a simple question:
+
+> How would a PowerPC Mac running Mac OS X Leopard eat today's Bing wallpaper?
+
 ## Project scope
 
 LeoEatsBing is intentionally small.
