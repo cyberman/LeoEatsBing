@@ -2,6 +2,11 @@
 
 # Build a Mac OS X Leopard-compatible DMG for LeoEatsBing.
 # This script must be run on Mac OS X because it uses hdiutil.
+#
+# Optional volume icon:
+#   Assets/LeoEatsBingVolume.icns
+# or fallback:
+#   Assets/LeoEatsBing.icns
 
 APPNAME="LeoEatsBing"
 VERSION="${1:-1.0}"
@@ -11,8 +16,25 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 DIST_DIR="$REPO_ROOT/dist"
 STAGE_DIR="/tmp/${APPNAME}-dmg-stage-$$"
+
+TEMP_DMG="$DIST_DIR/${APPNAME}-${VERSION}-temp.dmg"
 DMG_NAME="${APPNAME}-${VERSION}-LeopardPPC.dmg"
 DMG_PATH="$DIST_DIR/$DMG_NAME"
+
+MOUNT_POINT=""
+
+cleanup()
+{
+    if [ -n "$MOUNT_POINT" ] && [ -d "$MOUNT_POINT" ]; then
+        /usr/bin/hdiutil detach "$MOUNT_POINT" >/dev/null 2>&1 || \
+        /usr/bin/hdiutil detach "$MOUNT_POINT" -force >/dev/null 2>&1
+    fi
+
+    rm -rf "$STAGE_DIR"
+    rm -f "$TEMP_DMG"
+}
+
+trap cleanup 0 1 2 3 15
 
 echo "Building $DMG_NAME"
 
@@ -38,8 +60,13 @@ if [ ! -d docs ]; then
 fi
 
 rm -rf "$STAGE_DIR"
+rm -f "$TEMP_DMG"
+rm -f "$DMG_PATH"
+
 mkdir -p "$STAGE_DIR/$APPNAME"
 mkdir -p "$DIST_DIR"
+
+echo "Preparing staging folder..."
 
 cp README.md "$STAGE_DIR/$APPNAME/"
 cp LICENSE "$STAGE_DIR/$APPNAME/"
@@ -87,25 +114,80 @@ UNINSTALL_EOF
 chmod +x "$STAGE_DIR/Install LeoEatsBing.command"
 chmod +x "$STAGE_DIR/Uninstall LeoEatsBing.command"
 
-rm -f "$DMG_PATH"
+STAGE_SIZE_KB="$(du -sk "$STAGE_DIR" | awk '{print $1}')"
+IMAGE_SIZE_MB="$(( ($STAGE_SIZE_KB / 1024) + 20 ))"
+
+if [ "$IMAGE_SIZE_MB" -lt 20 ]; then
+    IMAGE_SIZE_MB=20
+fi
+
+echo "Creating temporary read-write image..."
+echo "Image size: ${IMAGE_SIZE_MB}m"
 
 /usr/bin/hdiutil create \
     -volname "$APPNAME" \
-    -srcfolder "$STAGE_DIR" \
-    -ov \
-    -format UDZO \
-    "$DMG_PATH"
+    -fs HFS+ \
+    -format UDRW \
+    -size "${IMAGE_SIZE_MB}m" \
+    "$TEMP_DMG" >/dev/null
 
-RESULT=$?
+echo "Mounting temporary image..."
 
-rm -rf "$STAGE_DIR"
+MOUNT_OUTPUT="$(/usr/bin/hdiutil attach "$TEMP_DMG")"
+MOUNT_POINT="$(echo "$MOUNT_OUTPUT" | awk '/\/Volumes\// {print $3; exit}')"
 
-if [ "$RESULT" -ne 0 ]; then
-    echo "Error: DMG build failed."
-    exit "$RESULT"
+if [ -z "$MOUNT_POINT" ] || [ ! -d "$MOUNT_POINT" ]; then
+    echo "Error: could not determine DMG mount point."
+    echo "$MOUNT_OUTPUT"
+    exit 1
 fi
 
-/usr/bin/hdiutil verify "$DMG_PATH"
+echo "Mounted at: $MOUNT_POINT"
+
+echo "Copying files into image..."
+
+cp -R "$STAGE_DIR/"* "$MOUNT_POINT/"
+
+VOLUME_ICON=""
+
+if [ -f "$REPO_ROOT/Assets/LeoEatsBingVolume.icns" ]; then
+    VOLUME_ICON    VOLUME_ICON    VOLUME_ICONgVolume.icns"
+elif [ -f "$REPO_ROOT/Assets/LeoEatsBing.icns" ]; then
+                                                            [ -n "$VOLUME_ICON" ]; then
+    echo "Adding custom volume icon:"
+    echo "$VOLUME_ICON"
+
+    cp "$VOLUME_ICON" "$MO    cp "$VOLUME_ICON" "$MO    cp "$VOLUME_ICveloper/Tools/SetFile ]; then
+        /Developer/Tools/SetFile -a C "$MOUNT_POINT"
+        /Developer/Tools/SetFile -a V "$MOUNT_POINT/.VolumeIcon.icns"
+    else
+        echo "Warning: /        echo "Warning: /       nd."
+        echo "The .VolumeIcon.icns file was copied, but the custom icon flag was not set."
+    fi
+else
+    echo "No volume icon found. Skipping custom volume icon."
+fi
+
+sync
+
+echo "Detaching temporary image..."
+
+if ! /usr/bin/hdiutil detach "$MOUNT_POINT"; then
+    echo "Normal detach failed. Trying forced detach..."
+    /usr/bin/hdiutil detach "$MOUNT    /usr/bin/hdiutil detach "$MOUN_POINT=""
+
+echo "Converting to compressed read-only DMG..."
+
+/usr/bin/hdiutil cousr/bin/hdiutil cousr/bin/hdiutil cousr/bin/hdiutil cousr-level=9 \
+    -o "$DMG_PATH" >/dev/null 2>&1
+
+if [ ! -f "$DMG_PATH" ]; then
+    /usr/bin/hdiutil convert "$TEMP_DMG" \
+        -format UDZO \
+        -imagekey zlib-level=9 \
+        -o "$DMG_PATH" || exit 1        -o "$DMG_PATH" || exit 1        -o "$DMG_PATH" || exit 1        -o "$DMG_PATH" || exit MG verification failed."
+    exit 1
+fi
 
 echo
 echo "Done:"
