@@ -185,22 +185,19 @@ Does this help the Leopard eat Bing better?
 
 If not, it probably does not belong into the core project.
 
-## Possible future additions
+## Project status
 
-Possible future additions, if they remain small:
+LeoEatsBing is considered feature-complete when it can:
 
-- configurable market code
-    
-- configurable update time
-    
-- previous wallpaper restore helper
-    
-- simple image history cleanup
-    
-- optional `.icns` application wrapper for drag-and-drop installation
-    
+1. preserve the original desktop picture,
+2. fetch the daily Bing wallpaper,
+3. store it locally,
+4. set it as the desktop picture,
+5. run automatically through launchd,
+6. restore the original desktop picture on uninstall,
+7. remove its own files cleanly.
 
-Larger features should remain out of scope unless the project deliberately grows into a separate application.
+Further changes should be maintenance, compatibility fixes, or documentation improvements.
 
 ---
 
