@@ -3,10 +3,10 @@
 # Fetch Bing image metadata and set today's image as desktop wallpaper.
 
 MARKET="de-DE"
-BASE_DIR="$HOME/Pictures/LeoEatsBing-Wallpaper"
+BASE_DIR="$HOME/Pictures/LeoEatsBingWP"
 DATE_STAMP="$(date +%Y%m%d)"
 XML_FILE="/tmp/bing-wallpaper.xml"
-OUT_FILE="$BASE_DIR/bing-$DATE_STAMP.jpg"
+OUT_FILE="$BASE_DIR/leoeatsbing-$DATE_STAMP.jpg"
 
 mkdir -p "$BASE_DIR"
 
