@@ -6,6 +6,21 @@ Inspired by the Linux Mint Cinnamon desklet “Bing Desktop-Hintergrundbild” b
 
 Leo wakes up. Bing disappears. Wallpaper remains.
 
+## Project scope
+
+LeoEatsBing is intentionally small.
+
+It does one thing:
+
+1. Fetch the daily Bing wallpaper.
+    
+2. Store it locally.
+    
+3. Set it as the desktop picture.
+    
+
+It is not a widget, screensaver, menu bar app, or full wallpaper manager.
+
 ## Requirements
 
 - Mac OS X 10.5.8 Leopard
@@ -128,50 +143,10 @@ Optional: remove the project folder:
 rm -rf "$HOME/LeoEatsBing"
 ```
 
-## Troubleshooting
+# Troubleshooting
 
-### Nothing happens after loading the LaunchAgent
+Please read TROUBLESHOOTING.md.
 
-Check the log files:
-
-```sh
-cat "$HOME/Library/Logs/LeoEatsBing.log"
-cat "$HOME/Library/Logs/LeoEatsBing.error.log"
-```
-
-### The LaunchAgent does not start the script
-
-Make sure that `leoeatsbing.sh` is executable:
-
-```sh
-chmod +x "$HOME/LeoEatsBing/leoeatsbing.sh"
-```
-
-Also make sure that the path inside `org.quietcode.leoeatsbing.plist` matches the actual location of `leoeatsbing.sh`.
-
-### The wallpaper changes when run manually, but not through launchd
-
-Unload and load the LaunchAgent again:
-
-```sh
-launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
-launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"
-```
-
-## Project scope
-
-LeoEatsBing is intentionally small.
-
-It does one thing:
-
-1. Fetch the daily Bing wallpaper.
-    
-2. Store it locally.
-    
-3. Set it as the desktop picture.
-    
-
-It is not a widget, screensaver, menu bar app, or full wallpaper manager.
 
 ## Trademark notice
 
