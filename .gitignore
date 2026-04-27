@@ -1,2 +1,3 @@
 dist/*.dmg
 *.DS_Store
+dist/
