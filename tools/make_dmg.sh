@@ -75,9 +75,8 @@ cp leoeatsbing_install.sh "$STAGE_DIR/$APPNAME/"
 cp leoeatsbing_uninstall.sh "$STAGE_DIR/$APPNAME/"
 cp -R docs "$STAGE_DIR/$APPNAME/"
 
-if [ -d Assets ]; then
-    cp -R Assets "$STAGE_DIR/$APPNAME/"
-fi
+# Assets are build-time resources only.
+# They are not copied into the user-facing DMG payload.
 
 chmod +x "$STAGE_DIR/$APPNAME/leoeatsbing.sh"
 chmod +x "$STAGE_DIR/$APPNAME/leoeatsbing_install.sh"
