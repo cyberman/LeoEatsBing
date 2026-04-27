@@ -9,7 +9,9 @@ Inspired by Linux Mint Cinnamon Desklet "Bing Desktop-Hintergrundbild" by Starcr
 Go to Terminal.app and copy/paste:
 
 `mkdir -p "$HOME/Library/LaunchAgents"`
+
 `cp org.quietcode.leoeatsbing.plist "$HOME/Library/LaunchAgents/"`
+
 `chmod +x "$HOME/LeoEatsBing/leoeatsbing.sh"`
 
 ## Start
@@ -29,6 +31,7 @@ Go to Terminal.app and copy/paste:
 After modifying `org.quietcode.leoeatsbing.plist` file go to Terminal.app and copy/paste:
 
 `launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
+
 `launchctl load "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
 
 ## Deinstallation
@@ -36,8 +39,11 @@ After modifying `org.quietcode.leoeatsbing.plist` file go to Terminal.app and co
 Go to Terminal.app and copy/paste:
 
 `launchctl unload "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
+
 `rm "$HOME/Library/LaunchAgents/org.quietcode.leoeatsbing.plist"`
+
 `rm -f "$HOME/Library/Logs/LeoEatsBing.log"`
+
 `rm -f "$HOME/Library/Logs/LeoEatsBing.error.log"`
 
 If you don't like also the stored wallpapers anymore, go to Terminal.app and copy/paste:
