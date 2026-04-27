@@ -125,16 +125,15 @@ echo "Creating temporary read-write image..."
 echo "Image size: ${IMAGE_SIZE_MB}m"
 
 /usr/bin/hdiutil create \
-    -volname "$APPNAME" \
+    -megabytes "$IMAGE_SIZE_MB" \
     -fs HFS+ \
-    -format UDRW \
-    -size "${IMAGE_SIZE_MB}m" \
-    "$TEMP_DMG" >/dev/null
+    -volname "$APPNAME" \
+    "$TEMP_DMG" >/dev/null || exit 1
 
 echo "Mounting temporary image..."
 
 MOUNT_OUTPUT="$(/usr/bin/hdiutil attach "$TEMP_DMG")"
-MOUNT_POINT="$(echo "$MOUNT_OUTPUT" | awk '/\/Volumes\// {print $3; exit}')"
+MOUNT_POINT="$(echo "$MOUNT_OUTPUT" | awk '/\/Volumes\// {print $NF; exit}')"
 
 if [ -z "$MOUNT_POINT" ] || [ ! -d "$MOUNT_POINT" ]; then
     echo "Error: could not determine DMG mount point."
@@ -151,17 +150,22 @@ cp -R "$STAGE_DIR/"* "$MOUNT_POINT/"
 VOLUME_ICON=""
 
 if [ -f "$REPO_ROOT/Assets/LeoEatsBingVolume.icns" ]; then
-    VOLUME_ICON    VOLUME_ICON    VOLUME_ICONgVolume.icns"
+    VOLUME_ICON="$REPO_ROOT/Assets/LeoEatsBingVolume.icns"
 elif [ -f "$REPO_ROOT/Assets/LeoEatsBing.icns" ]; then
-                                                            [ -n "$VOLUME_ICON" ]; then
+    VOLUME_ICON="$REPO_ROOT/Assets/LeoEatsBing.icns"
+fi
+
+if [ -n "$VOLUME_ICON" ]; then
     echo "Adding custom volume icon:"
     echo "$VOLUME_ICON"
 
-    cp "$VOLUME_ICON" "$MO    cp "$VOLUME_ICON" "$MO    cp "$VOLUME_ICveloper/Tools/SetFile ]; then
+    cp "$VOLUME_ICON" "$MOUNT_POINT/.VolumeIcon.icns"
+
+    if [ -x /Developer/Tools/SetFile ]; then
         /Developer/Tools/SetFile -a C "$MOUNT_POINT"
         /Developer/Tools/SetFile -a V "$MOUNT_POINT/.VolumeIcon.icns"
     else
-        echo "Warning: /        echo "Warning: /       nd."
+        echo "Warning: /Developer/Tools/SetFile not found."
         echo "The .VolumeIcon.icns file was copied, but the custom icon flag was not set."
     fi
 else
@@ -174,18 +178,22 @@ echo "Detaching temporary image..."
 
 if ! /usr/bin/hdiutil detach "$MOUNT_POINT"; then
     echo "Normal detach failed. Trying forced detach..."
-    /usr/bin/hdiutil detach "$MOUNT    /usr/bin/hdiutil detach "$MOUN_POINT=""
+    /usr/bin/hdiutil detach "$MOUNT_POINT" -force || exit 1
+fi
+
+MOUNT_POINT=""
 
 echo "Converting to compressed read-only DMG..."
 
-/usr/bin/hdiutil cousr/bin/hdiutil cousr/bin/hdiutil cousr/bin/hdiutil cousr-level=9 \
-    -o "$DMG_PATH" >/dev/null 2>&1
+/usr/bin/hdiutil convert "$TEMP_DMG" \
+    -format UDZO \
+    -imagekey zlib-level=9 \
+    -o "$DMG_PATH" >/dev/null || exit 1
 
-if [ ! -f "$DMG_PATH" ]; then
-    /usr/bin/hdiutil convert "$TEMP_DMG" \
-        -format UDZO \
-        -imagekey zlib-level=9 \
-        -o "$DMG_PATH" || exit 1        -o "$DMG_PATH" || exit 1        -o "$DMG_PATH" || exit 1        -o "$DMG_PATH" || exit MG verification failed."
+echo "Verifying DMG..."
+
+if ! /usr/bin/hdiutil verify "$DMG_PATH"; then
+    echo "Error: DMG verification failed."
     exit 1
 fi
 
