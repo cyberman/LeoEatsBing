@@ -1,5 +1,5 @@
 # LeoEatsBing
-
+<img src="Assets/LeoEatsBing-readme.png" alt="LeoEatsBing icon" width="96" align="right">
 LeoEatsBing is a tiny Mac OS X Leopard PowerPC helper that fetches the daily Bing™ wallpaper, stores it locally, and sets it as the desktop picture using native Leopard tools.
 
 Inspired by the Linux Mint Cinnamon desklet “Bing Desktop-Hintergrundbild” by Starcross. Kudos to the coder.
